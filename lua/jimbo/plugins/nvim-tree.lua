@@ -15,9 +15,49 @@ return {
     -- configure nvim-tree
     nvimtree.setup({
       view = {
+        float = {
+            enable = true,
+            quit_on_focus_loss = false,
+            open_win_config = function()
+                local screen_w = vim.opt.columns:get()
+                local screen_h = vim.opt.lines:get() - vim.opt.cmdheight:get()
+
+                local width = math.floor(screen_w * 0.6)
+                local height = math.floor(screen_h * 0.6)
+
+                local col = math.floor((screen_w - width) / 2)
+                local row = math.floor((screen_h - height) / 2)
+
+                return {
+                  border = "rounded",
+                  relative = "editor",
+                  row = row,
+                  col = col,
+                  width = width,
+                  height = height,
+                }
+            end,
+        },
         width = 35,
-            
       },
+      on_attach = function(bufnr)
+        local api = require("nvim-tree.api")
+        api.config.mappings.default_on_attach(bufnr)
+
+        local function opts(desc)
+          return {
+            desc = "nvim-tree: " .. desc,
+            buffer = bufnr,
+            noremap = true,
+            silent = true,
+          }
+        end
+        -- press q to close
+        vim.keymap.set("n", "q", api.tree.close, opts("Close"))
+
+        -- optional: Esc to close (very Telescope-like)
+        vim.keymap.set("n", "<Esc>", api.tree.close, opts("Close"))
+    end,
       -- change folder arrow icons
       renderer = {
         indent_markers = {
@@ -37,6 +77,7 @@ return {
       -- window splits
       actions = {
         open_file = {
+          quit_on_open = true,
           window_picker = {
             enable = false,
           },
@@ -50,6 +91,6 @@ return {
       },
     })
     -- global
-    vim.api.nvim_set_keymap("n", "<C-f>", ":NvimTreeToggle<cr>", {silent = true, noremap = true})
+    vim.api.nvim_set_keymap("n", "<leader>ft", ":NvimTreeToggle<cr>", {silent = true, noremap = true})
   end, 
 }

@@ -18,7 +18,6 @@ plugins = {
 
 opts =  {
   install = {
-    colorscheme = { "seoul256" },
   },
   checker = {
     enabled = true,

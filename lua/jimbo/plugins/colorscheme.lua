@@ -1,11 +1,6 @@
 return {
-    {
-        'shaunsingh/seoul256.nvim',
-        priority = 1000,
-        config = function()
-            vim.g.colors_name = 'seoul256';
-            vim.g.seoul256_disable_background = false;
-        end
-    }
+    'shaunsingh/seoul256.nvim',
+    config = function()
+        vim.cmd("colorscheme seoul256")
+    end
 }
-

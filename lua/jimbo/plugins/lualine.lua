@@ -2,14 +2,35 @@ return {
     'nvim-lualine/lualine.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
+        local tmuxline = {
+          normal = {
+            a = { fg = '#3a3a3a', bg = '#fad091', gui = 'bold' },
+            b = { fg = '#3a3a3a', bg = '#ffaa4f' },
+            c = { fg = '#3a3a3a', bg = '#fad091' },
+          },
+          insert = {
+            a = { fg = '#3a3a3a', bg = '#fad091', gui = 'bold' },
+            b = { fg = '#3a3a3a', bg = '#ffaa4f' },
+            c = { fg = '#3a3a3a', bg = '#fad091' },
+          },
+          visual = {
+            a = { fg = '#3a3a3a', bg = '#fad091', gui = 'bold' },
+            b = { fg = '#3a3a3a', bg = '#ffaa4f' },
+            c = { fg = '#3a3a3a', bg = '#fad091' },
+          },
+        }
+
         require('lualine').setup {
           options = {
-            theme = 'seoul256',
+            theme = tmuxline,
             icons_enabled = true,
             component_separators = { left = '', right = ''},
             section_separators = { left = '', right = ''},
             disabled_filetypes = {
-              statusline = {},
+              statusline = {
+                  "TelescopePrompt",
+                  "NvimTree"
+              },
               winbar = {},
             },
             ignore_focus = {},
